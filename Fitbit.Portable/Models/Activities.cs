@@ -77,5 +77,10 @@ namespace Fitbit.Api.Portable.Models
 
         [JsonProperty(PropertyName = "tcxLink")]
         public string TcxLink { get; set; }
+        public bool HasTcxLink()
+        {
+            return !string.IsNullOrWhiteSpace(TcxLink);
+        }
+
     }
 }

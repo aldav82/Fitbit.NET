@@ -11,8 +11,11 @@ namespace Fitbit.Api.Portable
         /// </summary>
         public DateTime RetryAfter { get; }
 
-        public FitbitRateLimitException(int retryAfterSeconds, IEnumerable<ApiError> errors)
-            : base($"Rate limit exceeded. Try again in {retryAfterSeconds} seconds. See exception for details.", errors)
+        public FitbitRateLimitException(int retryAfterSeconds, GenericError error)
+            : base($"Rate limit exceeded. Try again in {retryAfterSeconds} seconds. See exception for details.", new List<ApiError>() { new ApiError()
+            {
+                Message = error.message
+            } })
         {
             RetryAfter = DateTime.UtcNow.AddSeconds(retryAfterSeconds);
         }

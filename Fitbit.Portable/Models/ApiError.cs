@@ -2,6 +2,15 @@
 
 namespace Fitbit.Models
 {
+    public class GenericError
+    {
+        [JsonProperty("code")]
+        public string code { get; set; }
+        [JsonProperty("message")]
+        public string message { get; set; }
+        [JsonProperty("status")]
+        public string status { get; set; }
+    }
     public class ApiError
     {
         /// <summary>

@@ -15,15 +15,31 @@ namespace Fitbit.Api.Portable
         /// <param name="serializer"></param>
         /// <param name="errorJson"></param>
         /// <returns></returns>
-        internal static List<ApiError> ParseErrors(this JsonDotNetSerializer serializer, string errorJson)
+        internal static List<ApiError> ParseErrors(this JsonDotNetSerializer serializer, string errorJson, string rootProperty = "errors")
         {
             if (string.IsNullOrWhiteSpace(errorJson))
             {
                 throw new ArgumentNullException(nameof(errorJson), "errorJson can not be empty, null or whitespace");
             }
 
-            serializer.RootProperty = "errors";
+            serializer.RootProperty = rootProperty;
             return serializer.Deserialize<List<ApiError>>(errorJson);
+        }
+        /// <summary>
+        /// Parses the error structure which is common when errors are raised from the api
+        /// </summary>
+        /// <param name="serializer"></param>
+        /// <param name="errorJson"></param>
+        /// <returns></returns>
+        internal static GenericError ParseGenericError(this JsonDotNetSerializer serializer, string errorJson)
+        {
+            if (string.IsNullOrWhiteSpace(errorJson))
+            {
+                throw new ArgumentNullException(nameof(errorJson), "errorJson can not be empty, null or whitespace");
+            }
+
+            serializer.RootProperty = "error";
+            return serializer.Deserialize<GenericError>(errorJson);
         }
 
 
